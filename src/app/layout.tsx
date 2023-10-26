@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className='relative w-full h-full overflow-auto flex flex-col'>
         <Navbar />
         <main className="mx-auto w-full h-full p-4 text-black">
           {children}
