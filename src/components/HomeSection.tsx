@@ -17,7 +17,7 @@ async function HomeSection() {
     <div>
       <h1 className='text-3xl font-bold text-center'>Product Warehouse</h1>
 
-      <AddProductButton />
+      {/* <AddProductButton /> */}
 
       <form
         action={addProductToDatabase}

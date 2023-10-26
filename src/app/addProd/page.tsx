@@ -5,7 +5,6 @@ const AddProducts = () => {
   return (
     <div>
       <HomeSection />
-      Home
     </div>
   )
 }
