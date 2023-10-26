@@ -1,8 +1,6 @@
-import { Product } from "@/typing";
+import { Product } from "../../typing";
 import { addProductToDatabase } from "@/actions/serverActions";
-import { AddProductButton } from "@/component/AddProductButton";
-
-
+import { AddProductButton } from "./AddProductButton";
 
 import React from 'react'
 

@@ -1,15 +1,24 @@
-import { Todo } from "@/typing";
+import { Todo } from "../../../typing";
 
 const API_PATH = "http://127.0.0.1:3000/api/todos";
 
 export const getTodos = async () => {
-  return (await (
-    await fetch(API_PATH, {
+  try {
+    const response = await fetch(API_PATH, {
       next: {
         revalidate: 0,
       },
-    })
-  ).json()) as unknown as Array<Todo>;
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch todos. Status: ${response.status}`);
+    }
+
+    return (await response.json()) as Todo[];
+  } catch (error) {
+    console.error("Error in getTodos:", error);
+    throw error;
+  }
 };
 
 export const deleteTodo = async (id: string | number) => {

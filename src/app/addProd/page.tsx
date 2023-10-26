@@ -1,10 +1,11 @@
 import React from 'react'
-import { HomeSection } from '@/component/HomeSection'
+import { HomeSection } from '@/components/HomeSection'
 
 const AddProducts = () => {
   return (
     <div>
       <HomeSection />
+      Home
     </div>
   )
 }
