@@ -1,14 +1,35 @@
-import { addTodo } from "@/actions/actions";
+// import { addTodo } from "@/actions/actions";
 
-function AddTodo() {
+"use client";
+import { useState, useTransition } from "react";
+
+function AddTodo({ addNewTodo }: { addNewTodo: any }) {
+  const [title, setTitle] = useState("");
+  const [isPending, startTransition] = useTransition();
   const content = (
-    <form action={addTodo} className='flex gap-2 items-center'>
+    <form
+      className="w-full flex mb-10"
+      onSubmit={(e) => {
+        e.preventDefault();
+
+        if (title.trim().length === 0) {
+          return;
+        }
+
+        startTransition(() => {
+          addNewTodo(title);
+        });
+
+        setTitle("");
+      }}
+    >
       <input
         type='text'
         name='title'
         className='text-2xl p-1 rounded-lg flex-grow w-full'
         placeholder='New Todo'
         autoFocus
+        onChange={(e) => setTitle(e.target.value)}
       />
 
       <button
