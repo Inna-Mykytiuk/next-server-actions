@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { decrement, increment } from "../../redux/slice/counterSlice";
+import { decrement, increment, reset } from "../../redux/slice/counterSlice";
 
 const CounterElement = () => {
   const counter = useAppSelector((state) => state.counter.value);
@@ -22,7 +22,10 @@ const CounterElement = () => {
         >
           Decrement
         </button>
-        <button className="border px-3 py-2 rounded-md hover:bg-gray-200">
+        <button
+          className="border px-3 py-2 rounded-md hover:bg-gray-200"
+          onClick={() => dispatch(reset())}
+        >
           Reset
         </button>
       </div>

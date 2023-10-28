@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Navbar } from "@/components/Navbar";
-// import { store } from "../../redux/store";
 import MyProvider from "../../redux/provider";
 
 export const metadata: Metadata = {

@@ -24,20 +24,29 @@ export const Navbar = () => {
             </li>
             <li>
               <Link
+                href="/todo"
+                className="text-white/90 no-underline hover:text-white "
+              >
+                Next ToDo
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/addProd"
                 className="text-white/90 no-underline hover:text-white "
               >
                 Add products
               </Link>
             </li>
-            <li>
+            {/*Щоб працювати з цим шляхом потрібно підключити сервер npm run json-server*/}
+            {/* <li>
               <Link
                 href="/todosPage"
                 className="text-white/90 no-underline hover:text-white "
               >
                 Todos
               </Link>
-            </li>
+            </li> */}
           </ul>
         </h1>
       </div>
