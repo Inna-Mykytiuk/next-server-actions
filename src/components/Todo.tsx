@@ -6,11 +6,30 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import { TodoItem } from "./TodoItem";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { addTodo } from "../../redux/slice/todoSlice";
 
-const Todo = () => {
+interface TodoSetProps {
+  setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+// interface TodoItemProps {
+//   id: number;
+//   text: string;
+//   date: Date;
+//   completed: boolean;
+//   setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
+// }
+// interface ToDoState {
+//   todoList: TodoItemProps[];
+// }
+
+const Todo: React.FC = () => {
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [editTodo, setEditTodo] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
 
   // add emoji
   const addEmoji = (e: any) => {
@@ -21,6 +40,18 @@ const Todo = () => {
     setText(text + emoji);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(addTodo({
+      id: Math.floor(Math.random() * 100000),
+      text,
+      date: new Date().toISOString(),
+      completed: false,
+    }))
+
+
+  }
+
   return (
     <div className="pt-3rem w-[90%] sm:w-[70%] md:w-[60%] lg:w-[40%] mx-auto mt-[11rem]">
       <h1 className="text-2xl font-medium text-center capitalize pb-[2rem]">
@@ -28,7 +59,9 @@ const Todo = () => {
       </h1>
 
       {/* todo input  */}
-      <form className="flex items-start gap-2 pt-2rem">
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-start gap-2 pt-2rem">
         <div className="w-full flex items-end p-2 bg-todo rounded-sm relative">
           <textarea
             value={text}

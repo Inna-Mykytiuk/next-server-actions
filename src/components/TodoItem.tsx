@@ -10,24 +10,27 @@ import React, { useState } from "react";
 import moment from "moment/moment";
 import Layer from "./Layer";
 
-// interface TodoSetProps {
-//   setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
-// }
-
-interface TodoItemProps {
-  id: number;
-  text: string;
-  date: Date;
-  completed: boolean;
-  setEditTodo?: React.Dispatch<React.SetStateAction<string | null>>;
+interface TodoSetProps {
+  setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const TodoItem: React.FC<TodoItemProps> = () => {
+// interface TodoItemProps {
+//   id: number;
+//   text: string;
+//   date: Date;
+//   completed: boolean;
+//   setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
+// }
+// interface ToDoState {
+//   todoList: TodoItemProps[];
+// }
+
+const TodoItem = ({ setEditTodo }: TodoSetProps) => {
   const [showText, setShowText] = useState(false);
   const [showFullText, setShowFullText] = useState("");
 
   const fullText = (id: number) => {
-    const todoText: TodoItemProps | undefined = todo.find((todo) => todo.id === id);
+    const todoText = todo.find((todo) => todo.id === id);
     if (todoText) {
       setShowFullText(todoText.text);
       setShowText(true);
