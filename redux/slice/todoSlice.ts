@@ -28,10 +28,32 @@ export const todoSlice = createSlice({
     addTodo: (state, action) => {
       state.todoList.push(action.payload);
     },
+    removeTodo: (state, action) => {
+      state.todoList = state.todoList.filter(
+        (todo) => todo.id !== action.payload.id
+      );
+    },
+    updateTodo: (state, action) => {
+      state.todoList = state.todoList.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            id: action.payload.id,
+            text: action.payload.text,
+            date: new Date(),
+            completed: action.payload.completed,
+          };
+        } else {
+          return {
+            ...todo,
+          };
+        }
+      });
+    },
   },
 });
 
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, updateTodo } = todoSlice.actions;
 export default todoSlice.reducer;
 
 // Other code such as selectors can use the imported `RootState` type

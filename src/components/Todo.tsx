@@ -1,35 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import { TodoItem } from "./TodoItem";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { addTodo } from "../../redux/slice/todoSlice";
+import { addTodo, updateTodo } from "../../redux/slice/todoSlice";
 
-interface TodoSetProps {
-  setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
+interface TodoItemProps {
+  id: number;
+  text: string;
+  date: Date;
+  completed: boolean;
 }
-
-// interface TodoItemProps {
-//   id: number;
-//   text: string;
-//   date: Date;
-//   completed: boolean;
-//   setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
-// }
-// interface ToDoState {
-//   todoList: TodoItemProps[];
-// }
 
 const Todo: React.FC = () => {
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
-  const [editTodo, setEditTodo] = useState<string | null>(null);
+  const [editTodo, setEditTodo] = useState<TodoItemProps | null>(null);
+
 
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (editTodo) {
+      setText(editTodo.text);
+    } else {
+      setText("");
+    }
+  }, [editTodo]);
 
   // add emoji
   const addEmoji = (e: any) => {
@@ -42,14 +42,23 @@ const Todo: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo({
-      id: Math.floor(Math.random() * 100000),
-      text,
-      date: new Date().toISOString(),
-      completed: false,
-    }))
-
-
+    if (editTodo) {
+      dispatch(updateTodo({
+        id: editTodo.id,
+        text,
+        date: new Date().toISOString(),
+        completed: editTodo.completed,
+      }))
+    } else {
+      dispatch(addTodo({
+        id: Math.floor(Math.random() * 100000),
+        text,
+        date: new Date().toISOString(),
+        completed: false,
+      }))
+      setText("");
+      setShowEmoji(false);
+    }
   }
 
   return (

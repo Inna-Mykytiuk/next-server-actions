@@ -9,21 +9,27 @@ import { FaTimes } from "react-icons/fa";
 import React, { useState } from "react";
 import moment from "moment/moment";
 import Layer from "./Layer";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { removeTodo } from "../../redux/slice/todoSlice";
 
-interface TodoSetProps {
-  setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
-}
 
-// interface TodoItemProps {
-//   id: number;
-//   text: string;
-//   date: Date;
-//   completed: boolean;
+// interface TodoSetProps {
 //   setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
 // }
-// interface ToDoState {
-//   todoList: TodoItemProps[];
-// }
+
+interface TodoSetProps {
+  setEditTodo: React.Dispatch<React.SetStateAction<TodoItemProps | null>>;
+}
+
+interface TodoItemProps {
+  id: number;
+  text: string;
+  date: Date;
+  completed: boolean;
+}
+interface ToDoState {
+  todoList: TodoItemProps[];
+}
 
 const TodoItem = ({ setEditTodo }: TodoSetProps) => {
   const [showText, setShowText] = useState(false);
@@ -37,20 +43,13 @@ const TodoItem = ({ setEditTodo }: TodoSetProps) => {
     }
   };
 
-  const todo = [
-    {
-      id: 1,
-      text: "Hello world",
-      date: new Date(),
-      completed: false,
-    },
-    {
-      id: 2,
-      text: "Hello world",
-      date: new Date(),
-      completed: false,
-    },
-  ];
+  const todo = useAppSelector((state) => state.todo.todoList);
+  const dispatch = useAppDispatch();
+
+  const updateTodo = (todo: any) => {
+    setEditTodo(todo)
+  }
+
 
   return (
     <div id="grid">
@@ -75,10 +74,14 @@ const TodoItem = ({ setEditTodo }: TodoSetProps) => {
             </h1>
 
             <div className="flex items-center justify-end gap-1 py-2">
-              <span className="cursor-pointer hover:text-slate-500">
+              <span
+                onClick={() => dispatch(removeTodo(todo))}
+                className="cursor-pointer hover:text-slate-500">
                 <AiTwotoneDelete />
               </span>
-              <span className="cursor-pointer hover:text-slate-500">
+              <span
+                onClick={() => (updateTodo(todo))}
+                className="cursor-pointer hover:text-slate-500">
                 <AiTwotoneEdit />
               </span>
               <span className="cursor-pointer hover:text-slate-500">
