@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import moment from "moment/moment";
 import Layer from "./Layer";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { removeTodo } from "../../redux/slice/todoSlice";
+import { removeTodo, todoCompleted, updateTodo } from "../../redux/slice/todoSlice";
 import { FaTimes } from "react-icons/fa";
 import {
   AiTwotoneDelete,
@@ -71,11 +71,13 @@ const TodoItem = ({ setEditTodo }: TodoSetProps) => {
                 <AiTwotoneDelete />
               </span>
               <span
-                onClick={() => (updateTodo(todo))}
+                onClick={() => updateTodo(todo)}
                 className="cursor-pointer hover:text-slate-500">
                 <AiTwotoneEdit />
               </span>
-              <span className="cursor-pointer hover:text-slate-500">
+              <span
+                onClick={() => dispatch(todoCompleted(todo))}
+                className="cursor-pointer hover:text-slate-500">
                 <AiOutlineCheckCircle />
               </span>
             </div>

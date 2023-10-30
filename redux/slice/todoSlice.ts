@@ -50,10 +50,25 @@ export const todoSlice = createSlice({
         }
       });
     },
+    todoCompleted: (state, action) => {
+      state.todoList = state.todoList.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        } else {
+          return {
+            ...todo,
+          };
+        }
+      });
+    },
   },
 });
 
-export const { addTodo, removeTodo, updateTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, updateTodo, todoCompleted } =
+  todoSlice.actions;
 export default todoSlice.reducer;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -20,6 +20,7 @@ const Todo: React.FC = () => {
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [editTodo, setEditTodo] = useState<TodoItemProps | null>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
 
   const dispatch = useAppDispatch();
@@ -40,26 +41,62 @@ const Todo: React.FC = () => {
     setText(text + emoji);
   };
 
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (editTodo) {
+  //     dispatch(updateTodo({
+  //       id: editTodo.id,
+  //       text,
+  //       date: new Date().toISOString(),
+  //       completed: editTodo.completed,
+  //     })
+  //     );
+
+  //   } else {
+  //     dispatch(addTodo({
+  //       id: Math.floor(Math.random() * 100000),
+  //       text,
+  //       date: new Date().toISOString(),
+  //       completed: false,
+  //     }))
+  //     setText("");
+  //     setShowEmoji(false);
+  //   }
+  // }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editTodo) {
-      dispatch(updateTodo({
-        id: editTodo.id,
-        text,
-        date: new Date().toISOString(),
-        completed: editTodo.completed,
-      }))
+      dispatch(
+        updateTodo({
+          id: editTodo.id,
+          text,
+          date: new Date().toISOString(),
+          completed: editTodo.completed,
+        })
+      );
     } else {
-      dispatch(addTodo({
-        id: Math.floor(Math.random() * 100000),
-        text,
-        date: new Date().toISOString(),
-        completed: false,
-      }))
+      dispatch(
+        addTodo({
+          id: Math.floor(Math.random() * 100000),
+          text,
+          date: new Date().toISOString(),
+          completed: false,
+        })
+      );
+    }
+    setFormSubmitted(true);
+  };
+
+  useEffect(() => {
+    if (formSubmitted) {
+      // Якщо була відправлена форма, очистити форму та змінити текст кнопки
       setText("");
       setShowEmoji(false);
+      setEditTodo(null);
+      setFormSubmitted(false); // Знову встановлюємо formSubmitted на false
     }
-  }
+  }, [formSubmitted, editTodo]);
 
   return (
     <div className="pt-3rem w-[90%] sm:w-[70%] md:w-[60%] lg:w-[40%] mx-auto mt-[11rem]">
