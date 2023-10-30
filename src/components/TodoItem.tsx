@@ -1,34 +1,25 @@
 "use client";
+import React, { useState } from "react";
+
+import moment from "moment/moment";
+import Layer from "./Layer";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { removeTodo } from "../../redux/slice/todoSlice";
+import { FaTimes } from "react-icons/fa";
 import {
   AiTwotoneDelete,
   AiTwotoneEdit,
   AiOutlineCheckCircle,
 } from "react-icons/ai";
-import { FaTimes } from "react-icons/fa";
-
-import React, { useState } from "react";
-import moment from "moment/moment";
-import Layer from "./Layer";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { removeTodo } from "../../redux/slice/todoSlice";
-
-
-// interface TodoSetProps {
-//   setEditTodo: React.Dispatch<React.SetStateAction<string | null>>;
-// }
 
 interface TodoSetProps {
   setEditTodo: React.Dispatch<React.SetStateAction<TodoItemProps | null>>;
 }
-
 interface TodoItemProps {
   id: number;
   text: string;
   date: Date;
   completed: boolean;
-}
-interface ToDoState {
-  todoList: TodoItemProps[];
 }
 
 const TodoItem = ({ setEditTodo }: TodoSetProps) => {
@@ -46,7 +37,7 @@ const TodoItem = ({ setEditTodo }: TodoSetProps) => {
   const todo = useAppSelector((state) => state.todo.todoList);
   const dispatch = useAppDispatch();
 
-  const updateTodo = (todo: any) => {
+  const updateTodo = (todo: TodoItemProps) => {
     setEditTodo(todo)
   }
 
