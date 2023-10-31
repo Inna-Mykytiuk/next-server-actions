@@ -16,6 +16,14 @@ export const Navbar = () => {
             </li>
             <li>
               <Link
+                href="/shopping"
+                className="text-white/90 no-underline hover:text-white "
+              >
+                Shop
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/counter"
                 className="text-white/90 no-underline hover:text-white "
               >
