@@ -3,14 +3,23 @@
 import React from "react";
 import Image from 'next/image'
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { addCard } from "../../redux/slice/shoppingSlice";
 
 const Shop = () => {
   const data = useAppSelector((state) => {
-    console.log("Full state:", state);
+    // console.log("Full state:", state);
     return state.shop.data || [];
   });
+  const dispatch = useAppDispatch();
+  const shopList = useAppSelector((state) => {
+    // console.log("Full state:", state);
+    return state.shop.shoppingCard || [];
+  });
 
-  console.log("Data:", data);
+  const isItemExist = (id: string | number) => {
+    return shopList.some((item) => item.id === id);
+  }
+
   return (
     <div id="grid">
       {data.map((item, i) => (
@@ -24,8 +33,9 @@ const Shop = () => {
             <p>${item.price}</p>
           </div>
           <button
-            className="bg-blue-700 w-full text-center mt-5 py-2 hover:bg-blue-800
-          rounded-md">
+            onClick={() => dispatch(addCard(item))}
+            className={`bg-blue-700 w-full text-center mt-5 py-2 hover:bg-blue-800
+          rounded-md ${isItemExist(item.id) && "pointer-events-none bg-slate-500"}`}>
             Add to Cart
           </button>
         </div>

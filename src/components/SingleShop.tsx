@@ -1,29 +1,15 @@
 import React from "react";
 import Image from 'next/image'
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { removeCard } from "../../redux/slice/shoppingSlice";
 
 const SingleShop = () => {
-  const data = [
-    {
-      id: 1,
-      title: "Samsung Galaxy A51",
-      price: "350",
-      image_url: "https://procell.pe/wp-content/uploads/2020/10/a51.png",
-    },
-    {
-      id: 2,
-      title: "Samsung Galaxy A12",
-      price: "150",
-      image_url:
-        "https://cdn.ycan.shop/stores/3b145e8182eb3d8cbdd6633fd0df4d38/products/mfc0KT7Cq53NqdCLRPwjTUp75zpoV2NLmNMXEG52.png",
-    },
-    {
-      id: 3,
-      title: "Samsung Galaxy S21",
-      price: "450",
-      image_url:
-        "https://cdn.ycan.shop/stores/3b145e8182eb3d8cbdd6633fd0df4d38/products/mfc0KT7Cq53NqdCLRPwjTUp75zpoV2NLmNMXEG52.png",
-    },
-  ];
+  const data = useAppSelector((state) => {
+    // console.log("Full state:", state);
+    return state.shop.shoppingCard || [];
+  });
+  const dispatch = useAppDispatch();
+
   return (
     <div className="flex flex-col gap-4 my-4">
       {data.map((item, i) => (
@@ -40,7 +26,9 @@ const SingleShop = () => {
               <p>${item.price}</p>
             </div>
           </div>
-          <button className="hover:opacity-75 text-[1.5rem]">🗑️</button>
+          <button
+            onClick={() => dispatch(removeCard(item))}
+            className="hover:opacity-75 text-[1.5rem]">🗑️</button>
         </div>
       ))}
     </div>

@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import counterSlice from "./slice/counterSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import todoSlice from "./slice/todoSlice";
-import shopingSlice from "./slice/shopingSlice";
+import shoppingSlice from "./slice/shoppingSlice";
 import storage from "redux-persist/lib/storage";
 // import rootReducer from "./reducers";
 
@@ -13,7 +13,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   counter: counterSlice,
   todo: todoSlice,
-  shop: shopingSlice,
+  shop: shoppingSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
